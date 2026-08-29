@@ -2,7 +2,7 @@ import streamlit as st
 from encode import encode, generate_cover
 from decode import decode
 
-VERSION = "v1.1"
+VERSION = "1.2"
 MAX_MESSAGE_LENGTH = 2000
 
 st.set_page_config(
