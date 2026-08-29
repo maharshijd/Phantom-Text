@@ -2,6 +2,9 @@ import streamlit as st
 from encode import encode, generate_cover
 from decode import decode
 
+VERSION = "v1.1"
+MAX_MESSAGE_LENGTH = 2000
+
 st.set_page_config(
     page_title="PhantomText",
     page_icon="◈",
@@ -65,13 +68,6 @@ p, label, .stMarkdown {
     margin-top: 9px;
 }
 
-[data-testid="stVerticalBlockBorderWrapper"] {
-    background: #0d1014;
-    border: 1px solid #1c2229;
-    border-radius: 8px;
-    padding: 20px 22px 18px 22px;
-}
-
 .panel-header {
     display: flex;
     align-items: center;
@@ -100,6 +96,13 @@ p, label, .stMarkdown {
     font-size: 11px;
     color: #59636d;
     margin-bottom: 15px;
+}
+
+[data-testid="stVerticalBlockBorderWrapper"] {
+    background: #0d1014;
+    border: 1px solid #1c2229;
+    border-radius: 8px;
+    padding: 20px 22px 18px 22px;
 }
 
 div[data-testid="stTextArea"] textarea,
@@ -167,6 +170,15 @@ label {
     margin-bottom: 7px;
 }
 
+.counter {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: #59636d;
+    text-align: right;
+    margin-top: -8px;
+    margin-bottom: 8px;
+}
+
 .footer {
     border-top: 1px solid #1b2026;
     margin-top: 32px;
@@ -176,15 +188,6 @@ label {
     color: #454d55;
     display: flex;
     justify-content: space-between;
-}
-
-div[data-testid="stAlert"] {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-}
-
-.stCodeBlock {
-    margin-top: 0 !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -214,8 +217,14 @@ with encode_col:
         message = st.text_area(
             "MESSAGE",
             height=100,
+            max_chars=MAX_MESSAGE_LENGTH,
             placeholder="Enter your message...",
             key="message"
+        )
+
+        st.markdown(
+            f'<div class="counter">{len(message)} / {MAX_MESSAGE_LENGTH}</div>',
+            unsafe_allow_html=True
         )
 
         key = st.text_input(
@@ -226,26 +235,32 @@ with encode_col:
         )
 
         if st.button("ENCODE →", key="encode_button"):
-            if message and key:
-                cover = generate_cover()
-                result = encode(message, cover, key)
-
-                st.markdown(
-                    '<div class="status">● READY</div>',
-                    unsafe_allow_html=True
-                )
-
-                st.markdown(
-                    '<div class="result-box">'
-                    '<div class="result-label">RESULT</div>',
-                    unsafe_allow_html=True
-                )
-
-                st.code(result, language=None)
-
-                st.markdown("</div>", unsafe_allow_html=True)
+            if not message:
+                st.error("Message is required.")
+            elif not key:
+                st.error("Access key is required.")
             else:
-                st.error("Message and access key are required.")
+                try:
+                    cover = generate_cover()
+                    result = encode(message, cover, key)
+
+                    st.markdown(
+                        '<div class="status">● READY</div>',
+                        unsafe_allow_html=True
+                    )
+
+                    st.markdown(
+                        '<div class="result-box">'
+                        '<div class="result-label">RESULT</div>',
+                        unsafe_allow_html=True
+                    )
+
+                    st.code(result, language=None)
+
+                    st.markdown("</div>", unsafe_allow_html=True)
+
+                except Exception:
+                    st.error("Unable to process the message.")
 
 with decode_col:
     with st.container(border=True):
@@ -266,6 +281,11 @@ with decode_col:
             key="cipher"
         )
 
+        st.markdown(
+            f'<div class="counter">{len(cipher)} characters</div>',
+            unsafe_allow_html=True
+        )
+
         decode_key = st.text_input(
             "ACCESS KEY",
             type="password",
@@ -274,32 +294,38 @@ with decode_col:
         )
 
         if st.button("← DECODE", key="decode_button"):
-            if cipher and decode_key:
-                result = decode(cipher, decode_key)
-
-                if result is not None:
-                    st.markdown(
-                        '<div class="status">● VERIFIED</div>',
-                        unsafe_allow_html=True
-                    )
-
-                    st.markdown(
-                        '<div class="result-box">'
-                        '<div class="result-label">RESULT</div>',
-                        unsafe_allow_html=True
-                    )
-
-                    st.code(result, language=None)
-
-                    st.markdown("</div>", unsafe_allow_html=True)
-                else:
-                    st.error("Invalid access key or input.")
+            if not cipher:
+                st.error("Input is required.")
+            elif not decode_key:
+                st.error("Access key is required.")
             else:
-                st.error("Input and access key are required.")
+                try:
+                    result = decode(cipher, decode_key)
 
-st.markdown("""
+                    if result is not None:
+                        st.markdown(
+                            '<div class="status">● VERIFIED</div>',
+                            unsafe_allow_html=True
+                        )
+
+                        st.markdown(
+                            '<div class="result-box">'
+                            '<div class="result-label">RESULT</div>',
+                            unsafe_allow_html=True
+                        )
+
+                        st.code(result, language=None)
+
+                        st.markdown("</div>", unsafe_allow_html=True)
+                    else:
+                        st.error("Invalid access key or input.")
+
+                except Exception:
+                    st.error("Invalid access key or input.")
+
+st.markdown(f"""
 <div class="footer">
     <span>PHANTOMTEXT // LOCAL INSTANCE</span>
-    <span>PHANTOM SYSTEM / 01</span>
+    <span>v{VERSION}</span>
 </div>
 """, unsafe_allow_html=True)
