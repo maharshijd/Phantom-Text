@@ -8,7 +8,7 @@ The project provides a simple interface while keeping the underlying implementat
 
 **Live Demo:** [phantomtext.streamlit.app](https://phantomtext.streamlit.app)
 
-**Medium Blog** [Making of PhantomText](https://maharshijd.medium.com/what-you-can-hide-inside-ordinary-text-building-phantomtext-6b3325f5631d)
+**Medium Blog:** [Making of PhantomText](https://maharshijd.medium.com/what-you-can-hide-inside-ordinary-text-building-phantomtext-6b3325f5631d)
 
 ## Version
 
