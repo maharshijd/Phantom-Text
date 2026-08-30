@@ -8,7 +8,7 @@ The project provides a simple interface while keeping the underlying implementat
 
 ## Version
 
-**v1.2**
+**v1.3**
 
 ## Features
 

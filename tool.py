@@ -2,7 +2,7 @@ import streamlit as st
 from encode import encode, generate_cover
 from decode import decode
 
-VERSION = "1.2"
+VERSION = "1.3"
 MAX_MESSAGE_LENGTH = 2000
 
 st.set_page_config(
@@ -327,5 +327,38 @@ st.markdown(f"""
 <div class="footer">
     <span>PHANTOMTEXT // LOCAL INSTANCE</span>
     <span>v{VERSION}</span>
+</div>
+""", unsafe_allow_html=True)
+st.markdown("""
+<style>
+.footer {
+    margin-top: 60px;
+    padding: 25px 0 15px 0;
+    text-align: center;
+    border-top: 1px solid #222831;
+    color: #687386;
+    font-family: monospace;
+    font-size: 13px;
+}
+.footer .name {
+    color: #8ab4f8;
+    font-weight: 600;
+    text-decoration: none;
+}
+.footer .name:hover {
+    text-decoration: underline;
+}
+.footer .brand {
+    color: #7CFF7C;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+</style>
+<div class="footer">
+    <div class="brand">PHANTOMTEXT</div>
+    <div>Built with Python • Unicode • Steganography</div>
+    <br>
+    <div>Created by <a class="name" href="https://github.com/maharshijd" target="_blank">Maharshi Dindoliwala</a></div>
+    <div>© 2026 PhantomText</div>
 </div>
 """, unsafe_allow_html=True)
