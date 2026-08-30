@@ -33,27 +33,19 @@ def generate_cover():
 
 def encode(message, cover, key):
     data = message.encode("utf-8")
-
     key_hash = hashlib.sha256(key.encode("utf-8")).digest()
     verification = key_hash[:8]
     data = verification + data
-
     encrypted = bytearray()
-
     for i, byte in enumerate(data):
         encrypted.append(byte ^ key_hash[i % len(key_hash)])
-
     bits = ""
-
     for byte in encrypted:
         bits += bin(byte)[2:].zfill(8)
-
     encoded = ""
-
     for bit in bits:
         if bit == "0":
             encoded += ZERO
         else:
             encoded += ONE
-
     return cover[0] + encoded + cover[1:]
