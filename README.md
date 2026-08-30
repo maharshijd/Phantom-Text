@@ -2,11 +2,12 @@
 
 > beyond what meets the eye.
 
-**Live Demo:** [phantomtext.streamlit.app](https://phantomtext.streamlit.app)
-
 PhantomText is a lightweight text utility for encoding and recovering messages using an access key.
 
 The project provides a simple interface while keeping the underlying implementation separate from the user-facing application.
+
+**Live Demo:** [phantomtext.streamlit.app](https://phantomtext.streamlit.app)
+**Medium Blog** [Making of PhantomText](https://maharshijd.medium.com/what-you-can-hide-inside-ordinary-text-building-phantomtext-6b3325f5631d)
 
 ## Version
 
