@@ -34,5 +34,6 @@ Phantom-Text/
 ├── tool.py
 ├── encode.py
 ├── decode.py
+├── favicon.jpg
 ├── README.md
 └── LICENSE
