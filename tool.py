@@ -7,7 +7,7 @@ MAX_MESSAGE_LENGTH = 2000
 
 st.set_page_config(
     page_title="PhantomText",
-    page_icon="◈",
+    page_icon="favicon.jpg",
     layout="wide"
 )
 
@@ -210,7 +210,7 @@ with encode_col:
             <div class="panel-title">ENCODE</div>
         </div>
         <div class="panel-description">
-            Prepare a message for transmission.
+            Write the message you want concealed.
         </div>
         """, unsafe_allow_html=True)
 
